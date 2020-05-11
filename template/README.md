@@ -88,7 +88,7 @@ base url -
 
 ## Swagger Doc link
 
-http://localhost:5001/apiDocs/
+http://localhost:5001/apiDocs/v1/
 ```Shell
     basic auth credentials
     username- demo_admin

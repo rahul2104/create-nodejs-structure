@@ -41,7 +41,6 @@ const program = new commander.Command(packageJson.name)
   .option('--verbose', 'print additional logs')
   .option('--info', 'print environment debug info')
   .option('--use-npm')
-  .option('--typescript')
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -85,7 +84,7 @@ if (typeof projectName === 'undefined') {
   );
   console.log();
   console.log('For example:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-react-blog')}`);
+  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('demo-node')}`);
   console.log();
   console.log(
     `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
@@ -134,7 +133,8 @@ function createStructure(
   console.log(`Creating a new Node structure in ${chalk.green(root)}.`);
   console.log();
 
-  const useYarn = useNpm ? false : shouldUseYarn();
+//  const useYarn = useNpm ? false : shouldUseYarn();
+  const useYarn = false;
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
     process.exit(1);
@@ -249,33 +249,16 @@ async function run(
     console.log(chalk.cyan(`  ${displayedCommand} start`));
     console.log('    Starts the development server.');
     console.log();
-    console.log(
-      chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
-    );
-    console.log('    Bundles the app into static files for production.');
-    console.log();
-    console.log(chalk.cyan(`  ${displayedCommand} test`));
-    console.log('    Starts the test runner.');
-    console.log();
-    console.log(
-      chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}deploy`) +
-      ' and ' +
-      chalk.cyan(`${displayedCommand} ${useYarn ? '' : 'run '}deploy:prod`));
-    console.log('    Deploys your blog with Netlify.');
-    console.log();
-    console.log(
-      chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`)
-    );
-    console.log(
-      '    Removes this tool and copies build dependencies, configuration files'
-    );
-    console.log(
-      '    and scripts into the app directory. If you do this, you can’t go back!'
-    );
-    console.log();
     console.log('We suggest that you begin by typing:');
     console.log();
     console.log(chalk.cyan('  cd'), appName);
+    console.log();
+    console.log(chalk.cyan('  cp'), 'env.example .env');
+    console.log('Maintain your environment variables is to use a .env file');
+    console.log();
+    console.log(chalk.cyan('  mkdir'), 'uploads');
+    console.log('Create uploads folder for file upload');
+    console.log();
     console.log(`  ${chalk.cyan(`${displayedCommand} start`)}`);
     console.log();
     console.log('Happy hacking!');

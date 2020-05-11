@@ -1,7 +1,7 @@
 {
   "name": "create-nodejs-structure",
   "description": "Initialize a node structure with create-nodejs-structure",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "author": {
     "name": "Rahul Singh"
@@ -34,5 +34,9 @@
     "tar-pack": "3.4.1",
     "tmp": "0.0.33",
     "validate-npm-package-name": "3.0.0"
+  },
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
   }
 }
