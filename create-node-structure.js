@@ -109,19 +109,17 @@ const hiddenProgram = new commander.Command()
   )
   .parse(process.argv);
 
-createBlog(
+createStructure(
   projectName,
   program.verbose,
   program.useNpm,
-  program.typescript,
   hiddenProgram.internalTestingTarball
 );
 
-function createBlog(
+function createStructure(
   name,
   verbose,
   useNpm,
-  useTypescript,
   tarball = tarballURL
 ) {
   const root = path.resolve(name);
@@ -133,7 +131,7 @@ function createBlog(
     process.exit(1);
   }
 
-  console.log(`Creating a new React blog in ${chalk.green(root)}.`);
+  console.log(`Creating a new Node structure in ${chalk.green(root)}.`);
   console.log();
 
   const useYarn = useNpm ? false : shouldUseYarn();
@@ -147,7 +145,6 @@ function createBlog(
     appName,
     verbose,
     tarball,
-    useTypescript,
     useYarn
   );
 }
@@ -216,12 +213,11 @@ async function run(
   appName,
   verbose,
   tarball,
-  useTypescript,
   useYarn
 ) {
   try {
     console.log('Downloading the template.');
-    await createTemplate(tarball, root, useTypescript)
+    await createTemplate(tarball, root)
 
     let isOnline = await checkIfOnline(useYarn)
     console.log('Installing dependencies. This may take a while...')
@@ -337,7 +333,7 @@ function extractStream(stream, dest) {
 }
 
 // Extract package name from tarball url or path.
-async function createTemplate(tarball, root, useTypescript) {
+async function createTemplate(tarball, root) {
   let temp
   try {
     let directory
@@ -356,7 +352,7 @@ async function createTemplate(tarball, root, useTypescript) {
       directory = tarball
     }
 
-    let from = path.join(directory, useTypescript ? 'template-ts' : 'template')
+    let from = path.join(directory,'template')
     fs.copySync(from, root)
   }
   finally {

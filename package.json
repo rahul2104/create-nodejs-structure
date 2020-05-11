@@ -1,7 +1,7 @@
 {
-  "name": "create-node-structure",
-  "description": "Initialize a node structure with create-node-structure",
-  "version": "1.0.0",
+  "name": "create-nodejs-structure",
+  "description": "Initialize a node structure with create-nodejs-structure",
+  "version": "1.0.2",
   "license": "MIT",
   "author": {
     "name": "Rahul Singh"
@@ -22,7 +22,7 @@
     "swagger",
     "mongoose",
     "mongodb",
-    "redis"    
+    "redis"
   ],
   "dependencies": {
     "chalk": "1.1.3",

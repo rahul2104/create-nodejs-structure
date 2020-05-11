@@ -7,7 +7,7 @@ Getting started
 The simplest way to get started is to use `npx`:
 
 ```bash
-npx create-node-structure node_demo
+npx create-nodejs-structure node_demo
 cd node_demo
 cp env.example .env
 mkdir uploads

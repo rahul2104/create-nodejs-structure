@@ -6,3 +6,4 @@ build
 dist
 TODO.md
 /nbproject/
+/package-lock.json
