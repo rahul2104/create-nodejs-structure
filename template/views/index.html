@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Socket Chat</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="socket.io.dev.js"/></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"/></script>
+        <script>
+            var user_id = "";
+            var accessToken=""
+            var matchId="";
+            var groupId ="";
+            
+            var socket = io('http://localhost:4000',{
+                query:{accessToken:accessToken}
+            });
+            socket.on('connect', function (data) {
+                //console.log('connect ',data);
+                socket.emit('groupAdd', matchId);
+            });
+            socket.on('online', function (data) {
+                console.log('online ',data);
+            });
+            socket.on('offline', function (data) {
+                console.log('offline ',data);
+            });
+            // client
+            socket.on('error', function(err) {
+                console.log('error ',err);
+              
+            });
+            socket.on('groupMsg', function(data) {
+                console.log('groupMsg ',data);
+            });
+            
+            
+            function sendMsg(){
+                var msg = $('#msg').val();
+                if (msg != '') {
+                   socket.emit('groupSend', msg,groupId,matchId);
+                   $('#msg').val('');
+                }
+                return false;
+            };
+      </script>
+    </head>
+    <body>
+        <div>Socket Chat Test</div>
+        <form method="get">
+            <input type="text" id="msg"/>
+            <input type="button" onclick="sendMsg()" value="Send">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,388 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Demo App",
+    "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+    "contact": {
+        "email": ""
+    },
+    "version": "2.0.0",
+    "termsOfService":"http://swagger.io/terms/",
+    "license":{
+        "name":"Apache 2.0",
+        "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+    }    
+  },
+  "basePath": "/api/v1",
+  "tags":[
+    {
+    "name":"User",
+    "description":"Operations about user",
+    "externalDocs":{
+        "description":"Find out more about our store",
+        "url":""
+        }
+    },
+    {
+    "name":"Admin",
+    "description":"Operations about user",
+    "externalDocs":{
+        "description":"Find out more about our store",
+        "url":"http://swagger.io"
+        }
+    }
+],  
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json",
+    "application/x-www-form-urlencoded",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "application/json"
+  ],
+ 
+  "paths": {
+    "/user/login": {
+      "post": {
+        "deprecated":false,        
+        "tags": [
+          "User"
+        ],
+        "description": "Login",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceToken",
+            "in": "formData",
+            "description": "deviceToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceTypeID",
+            "in": "formData",
+            "description": "1= IOS, 2=Android , 3=web",
+            "required": true,
+            "enum":[1,2,3],
+            "type": "integer"
+          },
+          {
+            "name": "currentVersion",
+            "in": "formData",
+            "description": "currentVersion",
+            "required": true,            
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/user/signup": {
+      "post": {
+        "deprecated":false,        
+        "tags": [
+          "User"
+        ],
+        "description": "Signup",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "deviceID",
+            "in": "formData",
+            "description": "deviceID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceToken",
+            "in": "formData",
+            "description": "deviceToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceTypeID",
+            "in": "formData",
+            "description": "1= IOS, 2=Android , 3=web",
+            "required": true,
+            "enum":[1,2,3],
+            "type": "integer"
+          },
+           {
+            "name": "email",
+            "in": "formData",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "dob",
+            "in": "formData",
+            "description": "date of birth - YYYY-MM-DD",
+            "type": "string"
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "description": "0 Undefined, 1 Male, 2 Female, 3 Others",
+            "enum":[0,1,2,3],
+            "type": "integer"
+          },
+          {
+            "name": "currentVersion",
+            "in": "formData",
+            "description": "currentVersion",
+            "type": "string",
+            "required": true            
+          }
+         
+         
+        ]
+      }
+    },
+    "/user/logout": {
+      "post": {
+        "deprecated":true,        
+        "tags": [
+          "User"
+        ],
+        "description": "Social / normal login - logout",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/user/social-login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Social Signup / Login",
+        "consumes": [
+            "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "deviceID",
+            "in": "formData",
+            "description": "deviceID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceToken",
+            "in": "formData",
+            "description": "deviceToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceTypeID",
+            "in": "formData",
+            "description": "1= IOS, 2=Android , 3=web",
+            "required": true,
+            "enum":[1,2,3],
+            "type": "integer"
+          },
+          {
+            "name": "socialType",
+            "in": "formData",
+            "description": "1= Facebook, 2=Google",
+            "required": true,
+            "enum":[1,2],
+            "type": "integer"
+          },
+          {
+            "name": "socialId",
+            "in": "formData",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "email",
+            "type": "string"
+          },
+          {
+            "name": "dob",
+            "in": "formData",
+            "description": "date of birth - YYYY-MM-DD",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name",
+            "type": "string"           
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "username",
+            "type": "string",
+            "required": true     
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "description": "0 Undefined, 1 Male, 2 Female, 3 Others",
+            "enum":[0,1,2,3],
+            "type": "integer"
+          },
+          {
+            "name": "profileImage",
+            "in": "formData",
+            "description": "profileImage",
+            "type": "string"   
+          }
+        ],
+        "responses": {
+            "200": {
+                "description": "Successfully"
+            },
+            "401": {
+                "description": "Unauthorized"
+            }
+        },
+        "security": [
+            {
+                "basicAuth": [
+                    "Username: ",
+                    "Password: "
+                ]
+            }
+        ]
+      }
+    },
+    "/user/guest-login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary":"Guest Login",
+        "description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "consumes": [
+            "multipart/form-data"
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "deviceID",
+            "in": "formData",
+            "description": "deviceID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceToken",
+            "in": "formData",
+            "description": "deviceToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceTypeID",
+            "in": "formData",
+            "description": "1= IOS, 2=Android , 3=web",
+            "required": true,
+            "enum":[1,2,3],
+            "type": "integer"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name",
+            "type": "string"           
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "username",
+            "type": "string",
+            "required": true     
+          },
+          {
+            "name": "profileImage",
+            "in": "formData",
+            "description": "profileImage",
+            "type": "file"   
+          }
+        ],
+        "responses": {
+            "200": {
+                "description": "Successfully"
+            },
+            "401": {
+                "description": "Unauthorized"
+            }
+        },
+        "security": [
+            {
+                "basicAuth": [
+                    "Username: ",
+                    "Password: "
+                ]
+            }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+        "basicAuth": {
+            "type": "basic"
+        }
+    }
+}
