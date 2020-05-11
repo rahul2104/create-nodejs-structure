@@ -246,20 +246,18 @@ async function run(
     console.log(`Success! Created ${appName} at ${root}`);
     console.log('Inside that directory, you can run several commands:');
     console.log();
-    console.log(chalk.cyan(`  ${displayedCommand} start`));
-    console.log('    Starts the development server.');
-    console.log();
     console.log('We suggest that you begin by typing:');
     console.log();
     console.log(chalk.cyan('  cd'), appName);
     console.log();
     console.log(chalk.cyan('  cp'), 'env.example .env');
-    console.log('Maintain your environment variables is to use a .env file');
+    console.log('    Maintain your environment variables is to use a .env file');
     console.log();
     console.log(chalk.cyan('  mkdir'), 'uploads');
-    console.log('Create uploads folder for file upload');
+    console.log('    Create uploads folder for file upload');
     console.log();
-    console.log(`  ${chalk.cyan(`${displayedCommand} start`)}`);
+    console.log(chalk.cyan(`  ${displayedCommand} start`));
+    console.log('    Starts the development server.');
     console.log();
     console.log('Happy hacking!');
   }

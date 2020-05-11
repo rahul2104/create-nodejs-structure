@@ -9,6 +9,7 @@
   },
   "description": "Nodejs project structure using expressjs,socket.io,mongoose",
   "dependencies": {
+    "@sendgrid/mail": "^7.0.0",    
     "async": "^3.2.0",
     "asyncawait": "^3.0.0",
     "aws-sdk": "^2.673.0",
