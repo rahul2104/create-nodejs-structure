@@ -239,6 +239,18 @@ async function run(
       path.join(root, 'package.json'),
       JSON.stringify(appPackage, null, 2) + os.EOL
     );
+    
+    const appPackageSwagger = JSON.parse(fs.readFileSync(path.join(root, 'public/apiDocsV1/swagger.json')));
+
+    // Set the package name and version
+    appPackageSwagger.info.name = appName
+    appPackageSwagger.title.version = '1.0.0'
+
+    fs.writeFileSync(
+      path.join(root, 'public/apiDocsV1/swagger.json'),
+      JSON.stringify(appPackageSwagger, null, 2) + os.EOL
+    );
+
 
     const displayedCommand = useYarn ? 'yarn' : 'npm';
 
@@ -259,7 +271,7 @@ async function run(
     console.log(chalk.cyan(`  ${displayedCommand} start`));
     console.log('    Starts the development server.');
     console.log();
-    console.log('Happy hacking!');
+    console.log('Thank You!');
   }
   catch (reason) {
     console.log();

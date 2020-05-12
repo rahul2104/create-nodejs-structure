@@ -1,7 +1,7 @@
 {
   "name": "create-nodejs-structure",
   "description": "Initialize a node structure with create-nodejs-structure",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "license": "MIT",
   "author": {
     "name": "Rahul Singh"
