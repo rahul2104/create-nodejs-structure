@@ -243,8 +243,8 @@ async function run(
     const appPackageSwagger = JSON.parse(fs.readFileSync(path.join(root, 'public/apiDocsV1/swagger.json')));
 
     // Set the package name and version
-    appPackageSwagger.info.name = appName
-    appPackageSwagger.title.version = '1.0.0'
+    appPackageSwagger.info.title = appName
+    appPackageSwagger.info.version = '1.0.0'
 
     fs.writeFileSync(
       path.join(root, 'public/apiDocsV1/swagger.json'),
@@ -347,6 +347,13 @@ async function createTemplate(tarball, root) {
 
     let from = path.join(directory,'template')
     fs.copySync(from, root)
+    
+    //reate .env file
+    let fromFolder = path.join(directory,'template/env.example');
+    let toFolder=path.join(root,'.env');
+    fs.copySync(fromFolder, toFolder);
+    
+    fs.emptyDirSync(path.join(root,'uploads'));
   }
   finally {
     if (temp) {
