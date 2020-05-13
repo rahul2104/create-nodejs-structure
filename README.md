@@ -13,7 +13,7 @@ How To Start
 
 The simplest way to get started is to use `npx`:
 
-###npx
+#### npx
 ```bash
 npx create-nodejs-structure node_demo
 cd node_demo
@@ -24,14 +24,14 @@ npm start
 npx comes with npm 5.2+ and higher, see instructions for older npm versions
 
 
-###npm
+#### npm
 ```bash
 npm init nodejs-structure <project name>
 ```
 npm init <initializer> is available in npm 6+
 
 
-###yarn
+#### yarn
 ```bash
 yarn create nodejs-structure <project name>
 ```
