@@ -30,6 +30,14 @@ npm init nodejs-structure <project name>
 ```
 npm init <initializer> is available in npm 6+
 
+
+####yarn
+```bash
+yarn create nodejs-structure <project name>
+```
+yarn create is available in Yarn 0.25+
+
+
 [npm-image]: https://img.shields.io/npm/v/create-nodejs-structure
 [npm-url]: https://www.npmjs.com/package/create-nodejs-structure
 [node-image]: https://img.shields.io/node/v/create-nodejs-structure

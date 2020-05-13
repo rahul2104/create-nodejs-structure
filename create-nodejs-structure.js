@@ -19,7 +19,7 @@ const os = require('os');
 
 const packageJson = require('./package.json');
 
-const tarballURL = "https://codeload.github.com/rahul2104/create-node-structure/tar.gz/master"
+const tarballURL = "https://codeload.github.com/rahul2104/create-nodejs-structure/tar.gz/master"
 
 // These files should be allowed to remain on a failed install,
 // but then silently removed during the next create.
@@ -50,7 +50,7 @@ const program = new commander.Command(packageJson.name)
     );
     console.log(
       `      ${chalk.cyan(
-        'https://github.com/rahul2104/create-node-structure/issues/new'
+        'https://github.com/rahul2104/create-nodejs-structure/issues/new'
       )}`
     );
     console.log();

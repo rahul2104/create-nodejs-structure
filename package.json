@@ -1,13 +1,13 @@
 {
   "name": "create-nodejs-structure",
   "description": "Initialize a node structure with create-nodejs-structure",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "license": "MIT",
   "author": {
     "name": "Rahul Singh"
   },
   "bin": {
-    "create-node-structure": "create-node-structure.js"
+    "create-nodejs-structure": "create-nodejs-structure.js"
   },
   "repository": {
     "type": "git",
