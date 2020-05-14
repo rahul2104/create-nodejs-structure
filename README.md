@@ -42,12 +42,12 @@ yarn create is available in Yarn 0.25+
 
 
 ```bash
-cd node_demo/lib/module
+cd node_demo/lib/module/v1
 ```
 
 #### npx
 ```bash
-npx create-nodejs-project-module node_demo
+npx create-nodejs-project-module <module name>
 ```
 
 #### npm

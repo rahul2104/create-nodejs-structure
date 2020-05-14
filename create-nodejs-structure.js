@@ -16,10 +16,11 @@ const url = require('url');
 const hyperquest = require('hyperquest');
 const envinfo = require('envinfo');
 const os = require('os');
+const replace = require('replace-in-file');
 
 const packageJson = require('./package.json');
 
-const tarballURL = "https://codeload.github.com/rahul2104/create-nodejs-structure/tar.gz/master"
+const tarballURL = path.join(__dirname)
 
 // These files should be allowed to remain on a failed install,
 // but then silently removed during the next create.
@@ -250,6 +251,20 @@ async function run(
       path.join(root, 'public/apiDocsV1/swagger.json'),
       JSON.stringify(appPackageSwagger, null, 2) + os.EOL
     );
+    
+    const optionsEnv = {
+        files: path.join(root,`.env`),
+        from: [/Demo/g,/demo/g],
+        to: [`${appName}`,`${appName}`],
+    };
+    await fileUpdate(optionsEnv)
+    
+    const optionsServer = {
+        files: path.join(root,`server.js`),
+        from: [/Nodejs/g,],
+        to: [`${appName.toUpperCase()}`],
+    };
+    await fileUpdate(optionsServer)
 
 
     const displayedCommand = useYarn ? 'yarn' : 'npm';
@@ -360,6 +375,16 @@ async function createTemplate(tarball, root) {
       temp.cleanup()
     }
   }
+}
+
+async function fileUpdate(options) {
+    try {
+      const results = await replace(options)
+      console.log('Replacement results:', results);
+    }
+    catch (error) {
+      console.error('Error occurred:', error);
+    }
 }
 
 function checkAppName(appName) {

@@ -75,8 +75,8 @@ base url -
 Basic Auth api security 
 
 basic auth credentials
-username- demo_admin
-password - admin@demo    
+username- demo
+password - demo
 
 ## Staging server
 base url -
@@ -91,6 +91,6 @@ base url -
 http://localhost:5001/apiDocs/v1/
 ```Shell
     basic auth credentials
-    username- demo_admin
-    password - admin@demo    
+    username- demo
+    password - demo
 ```
