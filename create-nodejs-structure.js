@@ -85,11 +85,8 @@ if (typeof projectName === 'undefined') {
   );
   console.log();
   console.log('For example:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('demo-node')}`);
+  console.log(`npx ${chalk.cyan(program.name())} ${chalk.green('demo-node')}`);
   console.log();
-  console.log(
-    `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
-  );
   process.exit(1);
 }
 
@@ -171,7 +168,6 @@ function install(root, useYarn, verbose, isOnline) {
       }
 
       // Explicitly set cwd() to work around issues like
-      // https://github.com/facebook/create-react-app/issues/3326.
       // Unfortunately we can only do this for Yarn because npm support for
       // equivalent --prefix flag doesn't help with this issue.
       // This is why for npm, we run checkThatNpmCanReadCwd() early instead.
@@ -407,13 +403,11 @@ function checkAppName(appName) {
 // Also, if project contains remnant error logs from a previous
 // installation, lets remove them now.
 // We also special case IJ-based products .idea because it integrates with CRA:
-// https://github.com/facebook/create-react-app/pull/368#issuecomment-243446094
 function isSafeToCreateProjectIn(root, name) {
   const validFiles = [
     '.DS_Store',
     'Thumbs.db',
     '.git',
-    '.gitignore',
     '.idea',
     'README.md',
     'LICENSE',
