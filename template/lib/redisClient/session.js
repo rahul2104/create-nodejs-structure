@@ -30,7 +30,7 @@ exports.create = function (value) {
         rs.create({
             app: rsapp,
             id: value.userId,
-            ip: value.IP,
+            ip: value.ip,
             ttl: value.expTime,
             d: value.userObj
         },

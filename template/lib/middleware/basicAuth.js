@@ -6,7 +6,7 @@ var config = require('../config');
 //========================== Load Modules End =============================
 
 var basicAuthentication = function (request, response, next) {
-    console.log('basicAuthentication');
+//    console.log('basicAuthentication');
     if (request.method == 'OPTIONS') {
         response.sendStatus(200);
     } else{

@@ -3,9 +3,10 @@ const STATUS_CODE = {
 	SUCCESS: 1
 }
 
-const ACCOUNT_LEVEL = {
-	ADMIN: 1,
-	USER: 2
+const ACCOUNT_ROLE = {
+    USER: 1,
+    COMPANY:2,
+    ADMIN: 3,
 }
 
 const LOGIN_TYPE = {
@@ -19,9 +20,7 @@ const SOCIAL_ACCOUNT_TYPE = {
 const DB_MODEL_REF = {
         WHITELIST   : "whitelist",
 	USER        : "User",
-        ADMIN       : "Admin",
-        MESSAGE     : "Message",
-        GROUP       : "Group",
+        USERLOG     : "Userlog",
         MONGODBJOB  : "Mongodbcronjob",
 }
 
@@ -60,10 +59,19 @@ const REQUEST_API_STATUS = {
 	REMOVE: 'remove'
 }
 
+const ADMIN_ACCESS = {
+	SENT: 'sent',
+	ACCEPT: 'accept',
+	DECLINE: 'decline',
+	CANCEL: 'cancel',
+	REMOVE: 'remove'
+}
+
 
 const MESSAGES = {
         KEY_CANT_EMPTY          : "{{key}} cannot be empty",
 	INTERNAL_SERVER_ERROR   : "Please try after some time.",
+        EMAIL_ALREADY_EXIST     : "Email already exist",
 	INVALID_EMAIL           : "Please fill valid email address.",
 	INVALID_PASSWORD        : "Password needs to have at least one lower case, one uppercase, one number, one special character, and must be at least 8 characters but no more than 35.",
 	VALIDATION_ERROR        : "Validation error.",
@@ -74,25 +82,21 @@ const MESSAGES = {
 	TOKEN_EXPIRED           : "Token link has been expired.",
 	SESSION_EXPIRED         : "Your session has expired due to login in another device.",
         INCORRECT_PASS          : "Invalid email or passoword",
+        USER_NOT_REGISTERED     : "User has been not registered",
+        OLD_PASSWORD_MISMATCH:	"Old password is not correct.",
 }
 
 const EMAIL= {
-        subject: {
-            VERIFY_EMAIL: 'Confirm Email Address',
-            FORGOT_PWD_EMAIL: 'Reset Password Request',
-            SEND_INVITATION_EMAIL: 'Invitation Request',
-            SEND_QR_CODE_EMAIL: 'Code Verification',
-            SEND_REFERRAL_EMAIL: 'Invitation to join WiseOak',
-            REQUEST_PAY_SUMMARY: 'Request Pay Summary',
-            REQUEST_TRANSACTION_INVOICE: 'Request transaction invoice',
-            REACTIVATE_ACCOUNT_EMAIL: "Reactivate Account Email"
+        SUBJECT: {
+            VERIFY_EMAIL: 'Mobcoder Contacts : Confirm Email Address',
+            FORGOT_PWD_EMAIL: 'Mobcoder Contacts : Reset Password Request',
         },	
     }
 
 // ========================== Export Module Start ==========================
 module.exports = Object.freeze({
 	STATUS_CODE         : STATUS_CODE,
-	ACCOUNT_LEVEL       : ACCOUNT_LEVEL,
+	ACCOUNT_ROLE        : ACCOUNT_ROLE,
 	LOGIN_TYPE          : LOGIN_TYPE,
 	SOCIAL_ACCOUNT_TYPE : SOCIAL_ACCOUNT_TYPE,
 	DB_MODEL_REF        : DB_MODEL_REF,
@@ -103,6 +107,7 @@ module.exports = Object.freeze({
 	DEVICE_TYPE         : DEVICE_TYPE,
 	REQUEST_STATUS      : REQUEST_STATUS,
 	REQUEST_API_STATUS  : REQUEST_API_STATUS,
-        EMAIL               : EMAIL
+        EMAIL               : EMAIL,
+        ADMIN_ACCESS        : ADMIN_ACCESS
 });
 // ========================== Export Module End ============================

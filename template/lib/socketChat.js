@@ -2,11 +2,11 @@
 const socketio      = require('socket.io');
 const http          = require('http');
 const express       = require('express');
+const { instrument } = require("@socket.io/admin-ui");
 //========================== Load internal Module =========================
-const userService   = require('./module/user/userService');
-const adminService  = require('./module/admin/adminService');
-const messageService= require('./module/message/messageService');
-const groupService  = require('./module/group/groupService');
+const userService   = require('./module/v1/user/userService');
+//const messageService= require('./module/message/messageService');
+//const groupService  = require('./module/group/groupService');
 
 const middleware    = require('./middleware');
 const config        = require('./config');
@@ -15,11 +15,22 @@ const app = express();
 const server = http.createServer(app);
 server.listen(config.cfg.socket.port);
 
-const io = socketio.listen(server,{
-    transports:['polling', 'websocket'],
+const io = socketio(server, {
+    transports: ['polling', 'websocket'],
+    cors: {
+      origin: ["http://localhost:4000",config.cfg.webBasePath],
+      methods: ["GET", "POST"],
+      credentials: true
+    }
 });
 
-//io.set( 'origins', 'localhost:5001' );
+instrument(io, {
+    auth: {
+      type: "basic",
+      username: "vcards-socket-admin",
+      password: "$2b$10$heqvAkYMez.Va6Et2uXInOnkCT6/uQj1brkrbyG3LpopDklcq7ZOS" // "changeit" encrypted with bcrypt
+    },
+  });
 
 //socket access token authenticate
 io.use(middleware.authenticate.authSocketTkn)
@@ -32,10 +43,10 @@ io.sockets.on('connection', function (socket) {
     if(socket.user){
         addSocketID(socket);
         socketDisconnections(socket);
-        groupAdd(socket);
-        socketDisconnectionsGroup(socket);
-        groupMessaging(socket);
-        messaging(socket);
+//        groupAdd(socket);
+//        socketDisconnectionsGroup(socket);
+//        groupMessaging(socket);
+//        messaging(socket);
     }
 
 });

@@ -35,24 +35,6 @@ function _fetchFilesFromReq(request){
 	}
 }
 
-/*function _fetchMultipleFilesFromReq(request, keys){
-	if(request.file){
-		return [ request.file ];
-	}
-	else if(request.files){
-		var filesArr = [];
-		keys.forEach(function(key){
-			if(request.files[key]){
-				filesArr.push(request.files[key][0]);
-			}
-		})
-		return filesArr;
-	}
-	else{
-		//No Data
-	}
-}*/
-
 function __deleteFiles(filePathList){
 	var promiseArray = [];
 
@@ -64,24 +46,32 @@ function __deleteFiles(filePathList){
 		.catch(error => logger.error(error));
 }
 
-function uploadSingleMediaToS3(){
+function uploadSingleMediaToS3(folderName){
 	return function(request, response, next){
 		var files = _fetchFilesFromReq(request);
 		if(!files){
 			return next();
 		}
-
+                
 		return new Promise(function(resolve, reject){
 			var file = files[0];
+                        let key;
+                        if(folderName){
+                            key=folderName+"/"+String(file.filename);
+                        }else{
+                            key=String(file.filename);
+                        }
 			var params = {
                             Bucket:config.cfg.s3.bucketName, 
-                            Key:String(file.filename), 
+                            Key:key, 
                             Body:fs.createReadStream(file.path), 
-                            ACL:config.cfg.s3.ACL
+                            ACL:config.cfg.s3.acl
                         };
 			s3.upload(params, function(error, data){
 				if(data){
+                                    //console.log("data",data);
                                     request.body.location = data.Location;
+                                    request.body.s3ImageData = data;
 				}
 				__deleteFiles(_.map(files, 'path'));
 				next();

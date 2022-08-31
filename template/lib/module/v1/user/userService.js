@@ -1,100 +1,112 @@
 "use strict";
 
 //========================== Load Modules Start =======================
-
+const appUtils      = require("../../../appUtils");
 //========================== Load internal modules ====================
-const promise = require("bluebird");
-// Load user dao
-var _ = require("lodash");
 const userDao = require('./userDao');
 
 //========================== Load Modules End ==============================================
 
-function isSocialIdExist(params){
-    return userDao.isSocialIdExist(params);
+function login(params) {
+    let query = {};
+    query.email = params.email;
+    query.password = appUtils.createHashSHA256(params.password);
+    return userDao.getByKey(query)
+    .then(function (result) {
+        if (result) {
+            return result;
+        }else{
+            return false;
+        }
+    })
 }
 
-function socialLogin(user,loginInfo){
-    let query = {};
-        query._id = user._id;
+function createAdmin(params) {
+    return userDao.getByKey({email:params.email})
+    .then(function (result) {
+        if (!result) {
+            return userDao.createUser(params);
+        }else {
+            return result;
+        }
+    })
+}
+
+
+function createUser(params) {
+    return userDao.createUser(params)
+}
+
+function isEmailExist(params) {
+    return userDao.isEmailExist(params)
+}
+
+function updateUser(params) {
+    let update={};
+    let query={_id:params.user.userId};
+    if(params.name){
+        update.name=params.name;
+    }
+    if(params.email){
+        update.email=params.email;
+    }
+    if(params.password){
+        update.password=params.password;
+    }
+    if(params.employeeId){
+        update.employeeId=params.employeeId;
+    }
+    if(params.userType){
+        update.userType=params.userType;
+    }
+    if(params.gender){
+        update.gender=params.gender;
+    }
+    if(params.dob){
+        update.dob=params.dob;
+    }
+    if(params.designation){
+        update.designation=params.designation;
+    }
+    if(params.companyName){
+        update.companyName=params.companyName;
+    }
+    if(params.profileImage){
+        update.profileImage=params.profileImage;
+    }
+    if(params.workEmail){
+        update.workEmail=params.workEmail;
+    }
+    if(params.skype){
+        update.skype=params.skype;
+    }
+    if(params.website){
+        update.website=params.website;
+    }
+    if(params.googleMap){
+        update.googleMap=params.googleMap;
+    }
+    update.phoneNo=params.phoneNo;
+    update.aboutUs=params.aboutUs;
+    update.instagram=params.instagram;
+    update.facebook=params.facebook;
+    update.linkedin=params.linkedin;
+    update.twitter=params.twitter;
+    update.whatsApp=params.whatsApp;
+    update.hangouts=params.hangouts;
+    update.youtube=params.youtube;
+    update.snapchat=params.snapchat;
+    update.tiktok=params.tiktok;
+    update.pinterest=params.pinterest;
+    update.github=params.github;
+    update.npm=params.npm;
+    update.stackoverflow=params.stackoverflow;
     
-    var update = {};
-    if (loginInfo.deviceToken){
-        update.deviceToken = loginInfo.deviceToken;
-    }
-        update.deviceTypeID = loginInfo.deviceTypeID;     
-        update.deviceID     = loginInfo.deviceID; 
-        update.username     = loginInfo.username; 
-        update.isGuest      =0;
-        update.isSocialImage=1;
-    if (loginInfo.email){
-        update.email        = loginInfo.email; 
-    }
-    if (loginInfo.dob){
-        update.dob          = loginInfo.dob; 
-    } 
-    if (loginInfo.name){
-        update.name         = loginInfo.name; 
-    }    
-    if (loginInfo.gender){
-        update.gender       = loginInfo.gender; 
-    } 
-    if (loginInfo.profileImage){
-        update.profileImage = loginInfo.profileImage; 
-    } 
     return userDao.updateUser(query,update)
 }
 
-function socialSignUp(loginInfo){
-    let query = {};
-    if(loginInfo.socialType==1){       //1= Facebook, 2=Google
-        loginInfo.facebookId = loginInfo.socialId;
-    }else{
-        loginInfo.googleId = loginInfo.socialId;
-    }
-        delete loginInfo.socialId;
-        delete loginInfo.socialType;
-        
-        loginInfo.isGuest      =0;
-        loginInfo.isSocialImage=1;
-    return userDao.signUp(loginInfo);
-}
-
-function login(loginInfo) {
-    return userDao.login(loginInfo)
-}
-
-function getUserByDeviceId(loginInfo) {
-    return userDao.getUserByDeviceId(loginInfo)
-}
-
-function signUp(loginInfo) {
-    return userDao.signUp(loginInfo)
-}
-function givePoll(params) {
-    return userDao.givePoll(params)
-}
-function pollPrediction(params) {
-    return userDao.pollPrediction(params)
-}
-function isEmailIdExist(loginInfo) {
-    return userDao.isEmailIdExist(loginInfo)
-}
-
-function updateUser(query,update) {
-    return userDao.updateUser(query,update)
-}
-function changePassword(params) {
-    return userDao.changePassword(params)
-}
-function updateProfileImage(params) {
-    return userDao.updateProfileImage(params)
-}
-function getUserProfile(userId) {
-    return userDao.getUserProfile(userId)
-}
-function verifyUser(params) {
-    return userDao.verifyUser(params)
+function update(query,update) {
+    return userDao.update(query,update)
 }
 
 function userList(params) {
@@ -105,26 +117,26 @@ function getByKey (param) {
     return userDao.getByKey(param)
 }
 
+function emailCheck(params) {
+    return userDao.emailCheck(params)
+}
 
+function count(params) {
+    return userDao.count(params)
+}
 //========================== Export Module Start ==============================
 
 module.exports = {
-    isSocialIdExist,
-    socialLogin,
-    socialSignUp,
+    createAdmin,
     login,
-    signUp,
-    getUserByDeviceId,
-    isEmailIdExist,
-    getUserProfile,
+    createUser,
+    isEmailExist,
     updateUser,
-    updateProfileImage,
-    verifyUser,
-    changePassword,
     userList,
-    givePoll,
-    pollPrediction,
-    getByKey
+    getByKey,
+    update,
+    emailCheck,
+    count
 };
 
 //========================== Export Module End ===============================

@@ -7,120 +7,30 @@ var promise = require("bluebird");
 
 var _ = require("lodash");
 //========================== Load internal modules ====================
-const User = require('./userModel');
+const userModel = require('./userModel');
 
 
 // init user dao
 let BaseDao = require('../../../dao/baseDao');
-const userDao = new BaseDao(User);
+const userDao = new BaseDao(userModel);
 
 
 //========================== Load Modules End ==============================================
 
-function signUp(userInfo) {
-
-    userInfo.totalPred = 0;
-    userInfo.wonPred = 0,
-    userInfo.lostPred = 0;
-
-    let user = new User(userInfo);
+function createUser(params) {
+    var user = new userModel(params);
     return userDao.save(user);
 }
 
-function getUserByDeviceId(loginInfo) {
-    let query = {};
-    query.status = true;
-    query.deviceID = loginInfo.deviceID
-    return userDao.findOne(query)
-}
-
 function updateUser(query,update) {
-        update.updated = new Date();   
-    let option = {};
-        option.new = true;
-    return userDao.findOneAndUpdate(query, update, option);
-}
-
-function isEmailIdExist(params) {
-    let query = {};
-    query.email = params.email;
-    return userDao.findOne(query)
-        .then(function (result) {
-            if (result) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        })
-}
-
-function isSocialIdExist(params) {
-    let query = {};
-    if(params.socialType==1){       //1= Facebook, 2=Google
-        query.facebookId = params.socialId;
-    }else{
-        query.googleId = params.socialId;
-    }
-    
-    return userDao.findOne(query)
-}
-
-function getUserProfile(userId) {
-    let query = {};
-    // query.isActive = true;
-    query._id = userId
-    return userDao.findOne(query)
-}
-
-function getOtherUserProfile(params) {
-    let query = {};
-    // query.isActive = true;
-    query._id = params.userId
-    return userDao.find(query)
-}
-
-
-function userList(params) {
-    let query = {};
-    if (params.search) {
-        query["$or"] = [{ "name": { $regex: params.search } }]
-    }
-    if (params.pageNo) {
-        let pageNo = params.pageNo - 1;
-        let count = parseInt(params.count);
-        return User.find(query, '_id name profileImage').lean().sort({ name: 1 }).skip(pageNo * count).limit(count);
-
-    }
-    else {
-        return User.find(query, '_id name profileImage').lean().sort({ name: 1 })
-
-    }
-}
-
-function givePoll(params) {
-    let query = {};
-    query.appUserID = params.userId;
-    let update = {};
-    update["$inc"] = { 'totalPred': 1 };
-    update.updated = Date.now();
+    update.updated = new Date();   
     let option = {};
     option.new = true;
     return userDao.findOneAndUpdate(query, update, option);
 }
 
-function pollPrediction(params) {
-    let query = {};
-    query.appUserID = params.userId;
-    let update = {};
-    if (params.pollType == 1) {
-        update["$wonPred"] = { 'totalPred': 1 };
-
-    } else {
-        update["$lostPred"] = { 'totalPred': -1 };
-
-    }
-    update.updated = Date.now();
+function update(query,update) {
+    update.updated = new Date();   
     let option = {};
     option.new = true;
     return userDao.findOneAndUpdate(query, update, option);
@@ -130,22 +40,137 @@ function getByKey(query) {
     return userDao.findOne(query)
 }
 
+function isEmailExist(params) {
+    let query = {};
+    if(params.userId){
+        query._id = {$ne:params.userId};
+    }
+    if(params.email){
+        query.email = params.email;
+    
+        return userDao.findOne(query)
+        .then(function (result) {
+            if (result) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        })
+    }else{
+        return _PromiseFunction;
+    }
+}
+
+function emailCheck(params) {
+    let query = {};
+    if(params.userId){
+        query._id = {$ne:params.userId};
+    }else{
+        if(params.user.userType===1){
+            if(params.user.userId){
+                query._id = {$ne:params.user.userId};
+            }
+        }
+    }
+    if(params.email){
+        query.email = params.email;
+    
+        return userDao.findOne(query)
+        .then(function (result) {
+            if (result) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        })
+    }else{
+        return _PromiseFunction;
+    }
+}
+
+
+const _PromiseFunction = new Promise((resolve, reject) => {
+   resolve(true);
+});
+
+
+function userList(params) {
+    let query = {};
+    if (params.userType) {
+        query.userType=params.userType
+    }
+    if (params.status) {
+        query.status=params.status
+    }
+    if (params.companyId) {
+        query.companyId=params.companyId
+    }
+    if (params.search) {
+        query.name= { $regex: params.search,$options : "i"}
+    }
+    let sort={};
+    if(params.sortField&&params.sortType&&params.sortType!==""){
+        sort[params.sortField]=params.sortType
+    }else{
+        sort["employeeId"]=1
+    }
+    let fields={
+        _id:1,
+        name:1,
+        profileImage:1, 
+        email: 1,
+        userType:1,
+        gender: 1,
+        dob:1,
+        designation:1,
+        companyName:1,
+        employeeId:1,
+        workEmail: 1,
+        phoneNo: 1,
+        created:1,
+        status:1
+    }
+    if (params.pageNo) {
+        let pageNo = parseInt(params.pageNo) - 1;
+        let limit = parseInt(params.limit);
+        return userModel.find(query,fields).lean().sort(sort).skip(pageNo * limit).limit(limit);
+    }
+    else {
+        return userModel.find(query,fields).lean().sort(sort)
+
+    }
+}
+
+
+function count(params) {
+    let query = {};
+    if (params.userType) {
+        query.userType=params.userType
+    }
+    if (params.status) {
+        query.status=params.status
+    }
+    if (params.companyId) {
+        query.companyId=params.companyId
+    }
+    if (params.search) {
+        query["$or"] = [{ "name": { $regex: params.search } }]
+    }
+    return userDao.count(query)
+}
 //========================== Export Module Start ==============================
 
 module.exports = {
-    signUp,
-    getUserByDeviceId,
+    createUser,
     updateUser,
-    isSocialIdExist,
     getByKey,
-    
-    givePoll,
-    pollPrediction,
-    isEmailIdExist,
-    getUserProfile,
-    getOtherUserProfile,
+    isEmailExist,
     userList,
-
+    update,
+    emailCheck,
+    count
 };
 
 //========================== Export Module End ===============================

@@ -1,5 +1,5 @@
 console.log("");
-console.log("//************************* Nodejs App 1.0.0 **************************//");
+console.log("//************************* MYVCARD-NODE App 1.0.0 **************************//");
 console.log("Server Start Date : ",new Date());
 
 //.env file read

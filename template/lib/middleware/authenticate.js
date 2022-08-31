@@ -7,7 +7,6 @@ var mongoose = require("mongoose");
 const redisSession = require("../redisClient/session");
 const customException = require("../customException");
 
-const adminService = require("../module/v1/admin/adminService");
 const userService = require("../module/v1/user/userService");
 //========================== Load Modules End =============================
 
@@ -46,8 +45,7 @@ var autntctTkn = function (req, res, next) {
                 req.user.userId=userId;
                 next()
             } else {
-               throw customException.sessionExpired();
-                //res.render('reset_failure', {error_message: "Your token has been expired. Please try forgot password again."});
+               throw customException.unauthorizeAccess();
             }
         })
         .catch(function (err) {
@@ -65,14 +63,11 @@ var authSocketTkn = function (socket, next) {
             if (tokenPayload.d) {
                 let paylod = tokenPayload.d;
                 socket.payload = tokenPayload.d;
-                if (paylod.isAdmin == 0) {
-                    return userService.getByKey({ _id: paylod.userId });
-                } else {
-                    return adminService.findByKey({ _id: paylod.userId });
-                }
+               
+                return userService.getByKey({ _id: paylod.userId });
+                 
             } else {
                 next()
-               //throw customException.sessionExpired();
             }
         })
         .then(function (user) {

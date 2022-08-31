@@ -6,21 +6,19 @@ var Schema = mongoose.Schema;
 var User;
 
 var UserSchema = new Schema({
-    googleId: {
+    name: {
         type: String,
-        index: true,
-    },
-    facebookId: {
-        type: String,
-        index: true,
     },
     email: {
         type: String,
         index: true,
-        unique: true
     },
     password: {
         type: String
+    },
+    userType:{
+        type: Number,
+        default: 1, //1-user, 2-company,3-admin
     },
     gender: {
         type: Number,
@@ -28,32 +26,84 @@ var UserSchema = new Schema({
         min :0,
         max:3
     },
-    name: {
-        type: String,
-        default: ''
-    },
-    username: {
-        type: String,
-        default: ''
-    },
     dob: {
         type: String,
-        default: ''
+    },
+    designation: {
+        type: String,
+    },
+    companyName: {
+        type: String,
+    },
+    employeeId: {
+        type: String,
+    },
+    aboutUs: {
+        type: String,
     },
     profileImage: {
         type: String,
-        default: ''
     },
-    isSocialImage: {
-        type: Number,
-        default: 0 //1 social , 0 non social 
+    profileImageData:{},
+    workEmail: {
+        type: String,
+    },
+    phoneNo: {
+        type: String,
+    },
+    whatsApp: {
+        type: String,
+    },
+    skype:{
+        type: String,
+    },
+    website: {
+        type: String,
+    },
+    instagram: {
+        type: String,
+    },
+    facebook: {
+        type: String,
+    },
+    linkedin: {
+        type: String,
+    },
+    twitter: {
+        type: String,
+    },
+    googleMap:{
+        type: String,
+    },
+    hangouts:{
+        type: String,
+    },
+    youtube:{
+        type: String,
+    },
+    snapchat:{
+        type: String,
+    },
+    tiktok:{
+        type: String,
+    },
+    pinterest:{
+        type: String,
+    },
+    github:{
+        type: String,
+    },
+    npm:{
+        type: String,
+    },
+    stackoverflow:{
+        type: String,
     },
     deviceToken: {
         type: String
     },
     deviceID: {
         type: String,
-        index: true,
     },
     deviceTypeId: {
         type: Number,
@@ -61,21 +111,13 @@ var UserSchema = new Schema({
         min:1,
         max:3
     },
-    totalPred: {
-        type: Number,
-        default: 0
-    },
-    wonPred: {
-        type: Number,
-        default: 0
-    },
-    lostPred: {
-        type: Number,
-        default: 0
-    },
     status: {
         type: Number,
         default: 1
+    },
+    isDelete: {
+        type: Number,
+        default: 0
     },
     created: {
         type: Date,
@@ -83,24 +125,9 @@ var UserSchema = new Schema({
     },
     updated: {
         type: Date,
-        default: Date.now
-    },
-    isGuest: {
-        type: Number,
-        default: 1
-    },
-    isVarified: {
-        type: Number,
-        default: 1
-    },
+    }
 },
 );
-
-UserSchema.methods.toJSON = function () {
-    var obj = this.toObject();
-    delete obj.updated;
-    return obj;
-};
 
 //Export user module
 User = module.exports = mongoose.model(constants.DB_MODEL_REF.USER, UserSchema);

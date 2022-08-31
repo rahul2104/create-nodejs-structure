@@ -1,39 +1,33 @@
 "use strict";
+
 //========================== Load Modules Start =======================
 
-//========================== Load internal modules ====================
 var mongoose = require("mongoose");
-var promise = require("bluebird");
-
-var _ = require("lodash");
-//========================== Load internal modules ====================
-const groupModel = require('./groupModel');
-
-
-// init user dao
 let BaseDao = require('../../../dao/baseDao');
-const groupDao = new BaseDao(groupModel);
 
-
+const userLogModel = require('./userLogModel');
+const userLogDao = new BaseDao(userLogModel);
 //========================== Load Modules End ==============================================
 
 function create(params) {
-    let match = new groupModel(params);
-    return groupDao.save(match);
+    var accessCode = new userLogModel(params);
+    return userLogDao.save(accessCode);
 }
+
 
 function update(query,update) {
         update.updated = new Date();   
     let option = {};
         option.new = true;
-        option.upsert=true;
-    return groupDao.findOneAndUpdate(query, update, option);
+        //option.upsert=true;
+    return userLogDao.update(query, update, option);
 }
 
 
 function getByKey(query) {
-    return groupDao.findOne(query)
+    return userLogDao.findOne(query)
 }
+
 
 //========================== Export Module Start ==============================
 

@@ -1,35 +1,31 @@
 "use strict";
 
-//========================== Load Modules Start =======================
-
-//========================== Load internal modules ====================
 const promise = require("bluebird");
-// Load user dao
-var _ = require("lodash");
-const messageDao = require('./messageDao');
+const _ = require("lodash");
 
+const userLogDao = require('./userLogDao');
 //========================== Load Modules End ==============================================
-
-
 function create(param) {
-    return messageDao.create(param)
+    return userLogDao.create(param)
 }
 
 function getByKey(param) {
-    return messageDao.getByKey(param)
+    return userLogDao.getByKey(param)
 }
 
 function update(query,update) {
-    return messageDao.update(query,update)
+    return userLogDao.update(query,update)
 }
 
+function getList(param) {
+    return userLogDao.getList(param)
+}
 
 //========================== Export Module Start ==============================
-
 module.exports = {
     create,
     getByKey,
-    update
-};
-
+    update,
+    getList
+}
 //========================== Export Module End ===============================

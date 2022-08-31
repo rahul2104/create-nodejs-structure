@@ -8,7 +8,12 @@ var cfg = {
         debug:process.env.DEBUG,
 	port: process.env.PORT,
 	TAG: process.env.NODE_ENV,
+        
+        homePath:process.env.HOMEPATH,
+        webBasePath:process.env.WEB_BASEPATH,
+        
 	uploadDir: path.resolve('./uploads'),
+        
 	sendgridKey: process.env.SENDGRID_KEY,
 	//default admin
 	adminEmail: process.env.ADMIN_EMAIL,
@@ -22,8 +27,7 @@ var cfg = {
                 user: process.env.DB_USER,
 		pass: process.env.DB_PASS,
                 useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useCreateIndex: true
+                useUnifiedTopology: true
             }
 	},
         
@@ -64,9 +68,9 @@ var cfg = {
             bucketName: process.env.S3_BUCKET_NAME,
             publicBucketName: process.env.S3_BUCKET_NAME,
             signatureVersion: 'v2',
-            region: 'us-west-2',
+            region: process.env.S3_BUCKET_REGION,
             acl: 'public-read',
-            base_url:''
+            mediaPath: process.env.MEDIA_PATH
 	},
   
         socket:{

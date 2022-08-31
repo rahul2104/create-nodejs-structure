@@ -10,7 +10,7 @@ const logger = require("../logger").logger;
 mongoose.Promise = require('bluebird');
 
 const appUtils = require("../appUtils");
-const adminService  = require("../module/v1/admin/adminService");
+const userService  = require("../module/v1/user/userService");
 const whiteListService  = require("../module/whiteList/whiteListService");
 //=================================== Load Modules end =====================================
 
@@ -59,7 +59,8 @@ function connectDb(env, callback) {
         param.password=appUtils.createHashSHA256(config.cfg.adminPassword);
         param.name=config.cfg.adminName;
         param.status=1;
-        adminService.createAdmin(param)
+        param.userType=3;
+        userService.createAdmin(param)
         .then(function (result) {
             console.log('admin =>>',result);
         });
